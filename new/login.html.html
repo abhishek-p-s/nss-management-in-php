@@ -1,0 +1,32 @@
+
+
+<!DOCTYPE html>
+<html>   
+<head>
+<title>welcome page</title>
+</head>
+<body>
+	<?php
+	session_start();
+	$user=$_POST['username'];
+	$password=$_POST['password'];
+	$db_handle=pg_connect("host=localhost dbname=postgres user=postgres password=abhishek");
+	if(!$db_handle)
+	echo "an error occured";
+$query="SELECT username,password FROM login WHERE username='$user' AND password='$password'";
+$result=pg_query($db_handle,$query);
+if(!$result)
+echo "an error occured";
+$row=pg_fetch_row($result);
+if(pg_fetch_rows($result)==0)
+echo  "<h3>sorry! you are not currently registerd with us! \n please go back and register with us </h3>";
+else
+	if($row[1]!=$password)
+	echo  "<h3>sorry! you have enterd wrong password \n please go back and try again</h3>";
+else 
+	echo "<h3>hello $user! welcome to our chanel</h3>";
+
+	?>
+<hr><input type="button" name="submit" onclick="parent.location='C:\Bitnami\wappstack-7.4.4-1\apache2\htdocs\abhishek\new' ">
+</body>
+</html>
